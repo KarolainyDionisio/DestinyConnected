@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DestinyConnected</title>
+</head>
+<body>
+    <h1>Perfil do Usuário</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Bio</th>
+                <th>Telefone</th>
+                <th>Foto de Perfil</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuarioPerfil in UsuarioPerfil %}
+            <tr>
+                <td>{{ usuarioPerfil.id }}</td>
+                <td>{{ usuarioPerfil.usuario }}</td>
+                <td>{{ usuarioPerfil.bio }}</td>
+                <td>{{ usuarioPerfil.telefone }}</td>
+                <td>{{ usuarioPerfil.foto_perfil }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

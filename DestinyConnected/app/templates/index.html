@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DestinyConnected</title>
+</head>
+<body>
+    <h1>Viagens Disponíveis</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Origem</th>
+                <th>Destino</th>
+                <th>Data da Viagem</th>
+                <th>Hora de Saída</th>
+                <th>Motorista</th>
+                <th>Vagas Disponíveis</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for viagem in Viagem %}
+            <tr>
+                <td>{{ viagem.id }}</td>
+                <td>{{ viagem.origem }}</td>
+                <td>{{ viagem.destino }}</td>
+                <td>{{ viagem.data_viagem }}</td>
+                <td>{{ viagem.hora_saida }}</td>
+                <td>{{ viagem.motorista }}</td>
+                <td>{{ viagem.vagas_disponiveis }}</td>
+                <td>{{ viagem.preco }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

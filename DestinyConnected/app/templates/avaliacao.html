@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DestinyConnected</title>
+</head>
+<body>
+    <h1>Avaliação</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Viagem</th>
+                <th>Usuário</th>
+                <th>Nota</th>
+                <th>Comentário</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avaliacao in Avaliacao %}
+            <tr>
+                <td>{{ avaliacao.id }}</td>
+                <td>{{ avaliacao.viagem }}</td>
+                <td>{{ avaliacao.usuario }}</td>
+                <td>{{ avaliacao.nota }}</td>
+                <td>{{ avaliacao.comentario }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
