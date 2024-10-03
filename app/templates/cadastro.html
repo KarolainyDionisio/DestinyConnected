@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - DestinyConnected</title>
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <p>Crie sua conta para começar a explorar nossas viagens e fazer reservas.</p>
+    
+    <form action="usuario.html" method="POST">
+        <!-- Campo para o nome -->
+        <label for="nome">Nome Completo:</label><br>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <!-- Campo para o e-mail -->
+        <label for="email">E-mail:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <!-- Campo para o nome de usuário -->
+        <label for="usuario">Usuário:</label><br>
+        <input type="text" id="usuario" name="usuario" required><br><br>
+
+        <!-- Campo para a senha -->
+        <label for="senha">Senha:</label><br>
+        <input type="password" id="senha" name="senha" required><br><br>
+
+        <!-- Campo para confirmar a senha -->
+        <label for="confirmar-senha">Confirmar Senha:</label><br>
+        <input type="password" id="confirmar-senha" name="confirmar-senha" required><br><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <p>Já tem uma conta? <a href="login.html">Faça login aqui</a>.</p>
+</body>
+</html>

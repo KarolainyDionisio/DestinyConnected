@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DestinyConnected - Perfil do Usuário</title>
+</head>
+<body>
+    <h1>Perfil do Usuário</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Bio</th>
+                <th>Telefone</th>
+                <th>Foto de Perfil</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario_perfil in usuario_perfis %}
+                <tr>
+                    <td>{{ usuario_perfil.id }}</td>
+                    <td>{{ usuario_perfil.usuario.username }}</td>
+                    <td>{{ usuario_perfil.bio }}</td>
+                    <td>{{ usuario_perfil.telefone }}</td>
+                    <td>
+                        {% if usuario_perfil.foto_perfil %}
+                            <img src="{{ usuario_perfil.foto_perfil.url }}" alt="Foto de Perfil" width="50" height="50">
+                        {% else %}
+                            Não há foto
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Nenhum perfil encontrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

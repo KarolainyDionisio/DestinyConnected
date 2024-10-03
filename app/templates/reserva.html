@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DestinyConnected - Reservas</title>
+</head>
+<body>
+    <h1>Reservas</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Viagem</th>
+                <th>Número de Passageiros</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+                <tr>
+                    <td>{{ reserva.id }}</td>
+                    <td>{{ reserva.usuario.username }}</td>
+                    <td>{{ reserva.viagem.nome }}</td> 
+                    <td>{{ reserva.num_passageiros }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">Nenhuma reserva encontrada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
