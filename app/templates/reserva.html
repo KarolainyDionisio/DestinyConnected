@@ -4,32 +4,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DestinyConnected - Reservas</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        /* Campo de pesquisa */
+        #search {
+            width: 80%;
+            padding: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        #search:focus {
+            border-color: #4CAF50;
+        }
+
+        /* Tabela de viagens */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        td button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        td button:hover {
+            background-color: #45a049;
+        }
+
+        td button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+
+        /* Formulário de reserva */
+        #reserve-form {
+            margin-top: 20px;
+            width: 80%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #reserve-form label {
+            font-weight: bold;
+        }
+
+        #reserve-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #reserve-form input:focus {
+            border-color: #4CAF50;
+        }
+
+        #reserve-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        #reserve-form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsividade */
+        @media screen and (max-width: 768px) {
+            table, #search, #reserve-form {
+                width: 90%;
+            }
+
+            td button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <h1>Reservas</h1>
-    <table border="1">
+
+    <!-- Campo de pesquisa de viagens -->
+    <input type="text" id="search" placeholder="Pesquisar viagens..." onkeyup="searchTrips()">
+    
+    <!-- Tabela de viagens disponíveis -->
+    <h2>Viagens Disponíveis</h2>
+    <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Usuário</th>
-                <th>Viagem</th>
-                <th>Número de Passageiros</th>
+                <th>Nome da Viagem</th>
+                <th>Destino</th>
+                <th>Data</th>
+                <th>Ação</th>
             </tr>
         </thead>
-        <tbody>
-            {% for reserva in reservas %}
-                <tr>
-                    <td>{{ reserva.id }}</td>
-                    <td>{{ reserva.usuario.username }}</td>
-                    <td>{{ reserva.viagem.nome }}</td> 
-                    <td>{{ reserva.num_passageiros }}</td>
+        <tbody id="trips-table">
+            {% for viagem in viagens %}
+                <tr class="trip">
+                    <td>{{ viagem.id }}</td>
+                    <td>{{ viagem.nome }}</td>
+                    <td>{{ viagem.destino }}</td>
+                    <td>{{ viagem.data }}</td>
+                    <td>
+                        <button class="reserve-btn" onclick="selectTrip(viagem.id, viagem.nome, viagem.destino, viagem.data)">Reservar</button>
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="4">Nenhuma reserva encontrada.</td>
+                    <td colspan="5">Nenhuma viagem encontrada.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Formulário de reserva -->
+    <div id="reserve-form">
+        <h2>Fazer uma Reserva</h2>
+        <form id="reservation-form">
+            <label for="trip-name">Viagem Selecionada: </label>
+            <input type="text" id="trip-name" readonly><br><br>
+
+            <label for="num-passengers">Número de Passageiros: </label>
+            <input type="number" id="num-passengers" min="1" required><br><br>
+
+            <label for="user-name">Seu Nome: </label>
+            <input type="text" id="user-name" required><br><br>
+
+            <button type="submit">Confirmar Reserva</button>
+        </form>
+    </div>
+
+    <script>
+        // Função para pesquisar viagens
+        function searchTrips() {
+            let input = document.getElementById("search");
+            let filter = input.value.toLowerCase();
+            let table = document.getElementById("trips-table");
+            let rows = table.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName("td");
+                let match = false;
+                for (let j = 0; j < cells.length - 1; j++) { // Exclui a coluna de ação
+                    if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = match ? "" : "none";
+            }
+        }
+
+        // Função para selecionar uma viagem para reserva
+        function selectTrip(tripId, tripName) {
+            document.getElementById("reserve-form").style.display = "block";
+            document.getElementById("trip-name").value = tripName;
+            document.getElementById("reservation-form").onsubmit = function(e) {
+                e.preventDefault();
+                makeReservation(tripId);
+            };
+        }
+
+        // Função para fazer a reserva (simulando com alerta)
+        function makeReservation(tripId) {
+            let numPassengers = document.getElementById("num-passengers").value;
+            let userName = document.getElementById("user-name").value;
+            let tripName = document.getElementById("trip-name").value;
+
+            if (numPassengers && userName) {
+                alert(`Reserva feita com sucesso!\nViagem: ${tripName}\nPassageiros: ${numPassengers}\nUsuário: ${userName}`);
+                // Aqui você poderia enviar os dados para o servidor via AJAX
+                // Exemplo de envio para o backend:
+                // fetch('/reservas', { method: 'POST', body: JSON.stringify({ tripId, numPassengers, userName }) });
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+    </script>
+
 </body>
 </html>

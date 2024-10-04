@@ -4,21 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - DestinyConnected</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Cor de fundo neutra */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Limita a largura do formulário */
+            position: relative;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #fafafa;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50; /* Cor verde para o botão */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Alteração de cor ao passar o mouse */
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-password {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+
+        /* Centralização e flutuação */
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <p>Entre com suas credenciais para acessar sua conta.</p>
-    
-    <form action="usuario.html" method="POST">
-        <label for="usuario">Usuário:</label><br>
-        <input type="text" id="usuario" name="usuario" required><br><br>
+    <div class="login-container">
+        <h1>Login</h1>
+        <p>Entre com suas credenciais para acessar sua conta.</p>
 
-        <label for="senha">Senha:</label><br>
-        <input type="password" id="senha" name="senha" required><br><br>
+        <!-- Formulário de login -->
+        <form action="index.html" method="POST">
+            <label for="usuario">Usuário:</label>
+            <input type="text" id="usuario" name="usuario" required>
 
-        <button type="submit"><a href="login.html">Entrar</a></button>
-    </form>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
 
-    <p><a href="cadastro.html">Cadastrar</a>.</p>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p><a href="cadastro.html">Cadastrar</a></p>
+        <p class="forgot-password"><a href="#">Esqueceu a senha?</a></p>
+    </div>
 </body>
 </html>
