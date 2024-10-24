@@ -24,7 +24,6 @@ class Reserva(models.Model):
 class Avaliacao(models.Model):
     viagem = models.ForeignKey(Viagem, on_delete=models.CASCADE, related_name='avaliacoes')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliacoes')
-    nota = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)])  # Nota de 1 a 5
     comentario = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -34,7 +33,6 @@ class UsuarioPerfil(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)
-    foto_perfil = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
 
     def __str__(self):
         return self.usuario.username

@@ -5,7 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DestinyConnected - Reservas</title>
     <style>
-        /* Estilos gerais */
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            transition: all 0.3s ease; 
+        }
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-right: 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -27,7 +71,6 @@
             margin-top: 20px;
         }
 
-        /* Campo de pesquisa */
         #search {
             width: 80%;
             padding: 8px;
@@ -42,7 +85,6 @@
             border-color: #4CAF50;
         }
 
-        /* Tabela de viagens */
         table {
             width: 80%;
             border-collapse: collapse;
@@ -86,7 +128,6 @@
             cursor: not-allowed;
         }
 
-        /* Formulário de reserva */
         #reserve-form {
             margin-top: 20px;
             width: 80%;
@@ -129,26 +170,28 @@
             background-color: #45a049;
         }
 
-        /* Responsividade */
-        @media screen and (max-width: 768px) {
-            table, #search, #reserve-form {
-                width: 90%;
-            }
-
-            td button {
-                width: 100%;
-            }
-        }
+       
     </style>
 </head>
+<body>
+    <div class="navbar" id="navbar">
+        <button class="toggle-btn" id="toggle-btn">&#8595;</button>
+        <h2>DestinyConnected</h2>
+        <div class="links">
+            <a href="cadastro.html">Fazer Cadastro</a>
+            <a href="login.html">Logar</a>
+            <a href="index.html">Inicio</a>
+            <a href="viagem.html">Viagem</a>
+            <a href="avaliacao.html">Avaliar uma Viagem</a>
+            <a href="usuario.html">Perfil do usuário</a>
+        </div>
+    </div>
 <body>
 
     <h1>Reservas</h1>
 
-    <!-- Campo de pesquisa de viagens -->
-    <input type="text" id="search" placeholder="Pesquisar viagens..." onkeyup="searchTrips()">
+    <input type="text" id="search" placeholder="Pesquisar viagens" onkeyup="searchTrips()">
     
-    <!-- Tabela de viagens disponíveis -->
     <h2>Viagens Disponíveis</h2>
     <table>
         <thead>
@@ -179,7 +222,6 @@
         </tbody>
     </table>
 
-    <!-- Formulário de reserva -->
     <div id="reserve-form">
         <h2>Fazer uma Reserva</h2>
         <form id="reservation-form">
@@ -197,7 +239,6 @@
     </div>
 
     <script>
-        // Função para pesquisar viagens
         function searchTrips() {
             let input = document.getElementById("search");
             let filter = input.value.toLowerCase();
@@ -217,7 +258,7 @@
             }
         }
 
-        // Função para selecionar uma viagem para reserva
+
         function selectTrip(tripId, tripName) {
             document.getElementById("reserve-form").style.display = "block";
             document.getElementById("trip-name").value = tripName;
@@ -227,7 +268,6 @@
             };
         }
 
-        // Função para fazer a reserva (simulando com alerta)
         function makeReservation(tripId) {
             let numPassengers = document.getElementById("num-passengers").value;
             let userName = document.getElementById("user-name").value;
@@ -235,9 +275,6 @@
 
             if (numPassengers && userName) {
                 alert(`Reserva feita com sucesso!\nViagem: ${tripName}\nPassageiros: ${numPassengers}\nUsuário: ${userName}`);
-                // Aqui você poderia enviar os dados para o servidor via AJAX
-                // Exemplo de envio para o backend:
-                // fetch('/reservas', { method: 'POST', body: JSON.stringify({ tripId, numPassengers, userName }) });
             } else {
                 alert('Por favor, preencha todos os campos.');
             }

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DestinyConnected - Perfil do Usuário</title>
+    <style>
+        /* Estilo global */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            margin-right: 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .edit-form, .add-form {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .edit-form input, .edit-form textarea,
+        .add-form input, .add-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .edit-form button, .add-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-form button:hover, .add-form button:hover {
+            background-color: #45a049;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .actions button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .actions button:hover {
+            background-color: #007bb5;
+        }
+
+        @media (max-width: 768px) {
+            table, .edit-form, .add-form {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>DestinyConnected</h2>
+        <div class="links">
+            <a href="cadastro.html">Fazer Cadastro</a>
+            <a href="login.html">Logar</a>
+            <a href="index.html">Inicio</a>
+            <a href="viagem.html">Viagem</a>
+            <a href="reserva.html">Fazer uma Reserva</a>
+            <a href="avaliacao.html">Avaliar uma Viagem</a>
+        </div>
+    </div>
+
+    <h1>Perfil do Usuário</h1>
+
+    <button onclick="toggleAddForm()">Adicionar Usuário</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Bio</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="user-table-body">
+            {% for usuario_perfil in usuario_perfis %}
+            <tr id="user-{{ usuario_perfil.id }}">
+                <td>{{ usuario_perfil.id }}</td>
+                <td>{{ usuario_perfil.usuario }}</td>
+                <td>{{ usuario_perfil.bio }}</td>
+                <td>{{ usuario_perfil.telefone }}</td>
+                <td>
+                    <button onclick="editProfile({ usuario_perfil_id })">Editar</button>
+                    <button onclick="deleteProfile({ usuario_perfil_id })">Excluir</button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum perfil encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="add-form" id="add-form" style="display:none;">
+        <h2>Adicionar Usuário</h2>
+        <form id="add-user-form">
+            <label for="usuario">Usuário:</label>
+            <input type="text" id="usuario" name="usuario" required>
+
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" required></textarea>
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" required>
+
+            <button type="submit">Adicionar Usuário</button>
+        </form>
+    </div>
+
+    <div class="edit-form" id="edit-form" style="display:none;">
+        <h2>Editar Perfil</h2>
+        <form id="edit-profile-form">
+            <input type="hidden" id="edit-user-id">
+            <label for="edit-bio">Bio:</label>
+            <textarea id="edit-bio" name="bio" required></textarea>
+
+            <label for="edit-telefone">Telefone:</label>
+            <input type="text" id="edit-telefone" name="telefone" required>
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </div>
+
+    <div class="actions">
+        <button onclick="viewBookings()">Ver Reservas</button>
+        <button onclick="logout()">Sair</button>
+    </div>
+
+    <script>
+        function toggleAddForm() {
+            const form = document.getElementById("add-form");
+            form.style.display = form.style.display === "none" ? "block" : "none";
+        }
+
+        document.getElementById("add-user-form").onsubmit = function(e) {
+            e.preventDefault();
+            const usuario = document.getElementById("usuario").value;
+            const bio = document.getElementById("bio").value;
+            const telefone = document.getElementById("telefone").value;
+
+            const newUserId = Math.floor(Math.random() * 1000); // Simulação de ID
+            const tableBody = document.getElementById("user-table-body");
+            const newRow = `<tr id="user-${newUserId}">
+                <td>${newUserId}</td>
+                <td>${usuario}</td>
+                <td>${bio}</td>
+                <td>${telefone}</td>
+                <td>
+                    <button onclick="editProfile(${newUserId})">Editar</button>
+                    <button onclick="deleteProfile(${newUserId})">Excluir</button>
+                </td>
+            </tr>`;
+            tableBody.insertAdjacentHTML('beforeend', newRow);
+            alert('Usuário adicionado!');
+            toggleAddForm();
+            document.getElementById("add-user-form").reset();
+        }
+
+        function editProfile(userId) {
+            const userRow = document.getElementById(`user-${userId}`);
+            const bio = userRow.cells[2].innerText;
+            const telefone = userRow.cells[3].innerText;
+
+            document.getElementById("edit-user-id").value = userId;
+            document.getElementById("edit-bio").value = bio;
+            document.getElementById("edit-telefone").value = telefone;
+
+            document.getElementById("edit-form").style.display = "block";
+        }
+
+        document.getElementById("edit-profile-form").onsubmit = function(e) {
+            e.preventDefault();
+            const userId = document.getElementById("edit-user-id").value;
+            const bio = document.getElementById("edit-bio").value;
+            const telefone = document.getElementById("edit-telefone").value;
+
+            const userRow = document.getElement
+        }

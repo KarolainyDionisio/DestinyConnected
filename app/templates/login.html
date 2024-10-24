@@ -27,7 +27,7 @@
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px; /* Limita a largura do formulário */
+            max-width: 400px;
             position: relative;
         }
 
@@ -52,7 +52,7 @@
 
         button {
             padding: 10px;
-            background-color: #4CAF50; /* Cor verde para o botão */
+            background-color: #4CAF50; 
             color: white;
             border: none;
             border-radius: 4px;
@@ -62,7 +62,7 @@
         }
 
         button:hover {
-            background-color: #45a049; /* Alteração de cor ao passar o mouse */
+            background-color: #45a049; 
         }
 
         a {
@@ -82,7 +82,6 @@
             text-align: center;
         }
 
-        /* Centralização e flutuação */
         .login-container {
             position: absolute;
             top: 50%;
@@ -92,13 +91,12 @@
 
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        <p>Entre com suas credenciais para acessar sua conta.</p>
 
-        <!-- Formulário de login -->
-        <form action="index.html" method="POST">
+        <form action="index.html" method="GET">
             <label for="usuario">Usuário:</label>
             <input type="text" id="usuario" name="usuario" required>
 

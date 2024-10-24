@@ -4,7 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DestinyConnected - Viagens Disponíveis</title>
+    <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            transition: all 0.3s ease; 
+        }
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-right: 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        #search {
+            width: 80%;
+            padding: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        #search:focus {
+            border-color: #4CAF50;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        td button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        td button:hover {
+            background-color: #45a049;
+        }
+
+        td button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+
+        #reserve-form {
+            margin-top: 20px;
+            width: 80%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #reserve-form label {
+            font-weight: bold;
+        }
+
+        #reserve-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #reserve-form input:focus {
+            border-color: #4CAF50;
+        }
+
+        #reserve-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        #reserve-form button:hover {
+            background-color: #45a049;
+        }
+
+       
+    </style>
 </head>
+<body>
+    <div class="navbar" id="navbar">
+        <button class="toggle-btn" id="toggle-btn">&#8595;</button>
+        <h2>DestinyConnected</h2>
+        <div class="links">
+            <a href="cadastro.html">Fazer Cadastro</a>
+            <a href="login.html">Logar</a>
+            <a href="index.html">Inicio</a>
+            <a href="reserva.html">Fazer uma Reserva</a>
+            <a href="avaliacao.html">Avaliar uma Viagem</a>
+            <a href="usuario.html">Perfil do usuário</a>
+        </div>
+    </div>
 <body>
     <h1>Viagens Disponíveis</h1>
     <table border="1">
@@ -28,9 +209,9 @@
                     <td>{{ viagem.destino }}</td>
                     <td>{{ viagem.data_viagem }}</td>
                     <td>{{ viagem.hora_saida }}</td>
-                    <td>{{ viagem.motorista.username }}</td>
+                    <td>{{ viagem.motorista }}</td>
                     <td>{{ viagem.vagas_disponiveis }}</td>
-                    <td>R$ {{ viagem.preco|floatformat:2 }}</td> 
+                    <td>R$ {{ viagem.preco }}</td> 
                 </tr>
             {% empty %}
                 <tr>

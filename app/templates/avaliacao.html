@@ -5,7 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DestinyConnected - Avaliações</title>
     <style>
-        /* Estilo global para o corpo */
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            transition: all 0.3s ease; 
+        }
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-right: 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -24,7 +68,6 @@
             margin-bottom: 20px;
         }
 
-        /* Tabela de avaliações */
         table {
             width: 80%;
             border-collapse: collapse;
@@ -49,7 +92,6 @@
             background-color: #f9f9f9;
         }
 
-        /* Estilos para o formulário de avaliação */
         .review-form {
             width: 80%;
             background-color: white;
@@ -57,11 +99,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 40px;
-        }
-
-        .review-form label {
-            font-size: 16px;
-            font-weight: bold;
         }
 
         .review-form input, .review-form textarea {
@@ -73,10 +110,6 @@
             font-size: 16px;
         }
 
-        .review-form textarea {
-            resize: vertical;
-        }
-
         .review-form button {
             background-color: #4CAF50;
             color: white;
@@ -84,159 +117,85 @@
             border: none;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 16px;
-            transition: 0.3s;
         }
 
         .review-form button:hover {
             background-color: #45a049;
         }
-
-        /* Estilo para as estrelas */
-        .stars {
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 10px;
-        }
-
-        .star {
-            font-size: 30px;
-            color: #ddd;
-            cursor: pointer;
-            margin-right: 5px;
-            transition: color 0.3s;
-        }
-
-        .star:hover,
-        .star.selected {
-            color: #ffdd00;
-        }
-
-        /* Responsividade */
-        @media screen and (max-width: 768px) {
-            table, .review-form {
-                width: 90%;
-            }
-        }
     </style>
 </head>
+<body>
+    <div class="navbar" id="navbar">
+        <button class="toggle-btn" id="toggle-btn">&#8595;</button>
+        <h2>DestinyConnected</h2>
+        <div class="links">
+            <a href="index.html">Inicio</a>
+            <a href="viagem.html">Viagem</a>
+            <a href="reserva.html">Fazer uma Reserva</a>
+            <a href="cadastro.html">Fazer Cadastro</a>
+            <a href="login.html">Logar</a>
+            <a href="usuario.html">Perfil do usuário</a>
+        </div>
+    </div>
 <body>
 
     <h1>Avaliações</h1>
 
-    <!-- Tabela de avaliações -->
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Viagem</th>
                 <th>Usuário</th>
-                <th>Nota</th>
                 <th>Comentário</th>
             </tr>
         </thead>
-        
-        <tbody id="reviews-table">
-            <!-- Exemplo de avaliações (esses dados seriam gerados dinamicamente no backend) -->
-            <tr>
-                <td>1</td>
-                <td>Paris - Encantadora</td>
-                <td>usuario@example.com</td>
-                <td>⭐⭐⭐⭐⭐</td>
-                <td>Viagem incrível! Super recomendo!</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Nova York - A Grande Maçã</td>
-                <td>usuario2@example.com</td>
-                <td>⭐⭐⭐⭐</td>
-                <td>Foi uma experiência maravilhosa, só faltou mais tempo para explorar.</td>
-            </tr>
+        <tbody>
+            {% for avaliacao in avaliacao %}
+                <tr>
+                    <td>{{ avaliacao.id }}</td>
+                    <td>{{ avaliacao.viagem.nome }}</td> 
+                    <td>{{ avaliacao.usuario }}</td>
+                    <td>{{ avaliacao.comentario }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-    <!-- Formulário de avaliação -->
     <div class="review-form">
         <h2>Deixe sua avaliação</h2>
         <label for="email">Seu E-mail:</label>
         <input type="email" id="email" placeholder="Digite seu e-mail" required><br>
 
-        <label for="trip">Escolha a Viagem:</label>
-        <select id="trip" required>
-            <option value="Paris - Encantadora">Paris - Encantadora</option>
-            <option value="Nova York - A Grande Maçã">Nova York - A Grande Maçã</option>
-        </select><br>
-
-        <label for="rating">Sua Nota:</label>
-        <div class="stars" id="rating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div><br>
-
         <label for="comment">Comentário:</label>
-        <textarea id="comment" rows="4" placeholder="Deixe seu comentário aqui..." required></textarea><br>
+        <textarea id="comment" rows="4" placeholder="Deixe seu comentário aqui" required></textarea><br>
 
         <button type="submit" onclick="submitReview()">Enviar Avaliação</button>
     </div>
 
     <script>
-        // Função para selecionar as estrelas
-        let selectedRating = 0;
-        const stars = document.querySelectorAll('.star');
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                selectedRating = this.getAttribute('data-value');
-                updateStars();
-            });
-        });
-
-        // Atualiza o estado das estrelas de acordo com a avaliação selecionada
-        function updateStars() {
-            stars.forEach(star => {
-                if (star.getAttribute('data-value') <= selectedRating) {
-                    star.classList.add('selected');
-                } else {
-                    star.classList.remove('selected');
-                }
-            });
-        }
-
-        // Função para enviar a avaliação
         function submitReview() {
             const email = document.getElementById('email').value;
-            const trip = document.getElementById('trip').value;
             const comment = document.getElementById('comment').value;
 
-            if (!selectedRating || !email || !comment) {
+            if (!email || !comment) {
                 alert('Por favor, preencha todos os campos!');
                 return;
             }
 
-            // Aqui, você pode fazer a chamada para o backend para salvar a avaliação
-            // Exemplo: Enviar os dados via AJAX ou fetch para o servidor
+            alert(`Avaliação enviada!`);
 
-            // Exibindo um alerta de sucesso
-            alert(`Avaliação enviada com sucesso!\nViagem: ${trip}\nNota: ${selectedRating} estrelas\nComentário: ${comment}`);
-
-            // Atualizar a tabela com a nova avaliação
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td>Nova</td>
-                <td>${trip}</td>
+                <td>Viagem Exemplo</td>
                 <td>${email}</td>
-                <td>${'★'.repeat(selectedRating)}${'☆'.repeat(5 - selectedRating)}</td>
                 <td>${comment}</td>
             `;
-            document.getElementById('reviews-table').appendChild(newRow);
+            document.querySelector('tbody').appendChild(newRow);
 
-            // Limpar o formulário
             document.getElementById('email').value = '';
             document.getElementById('comment').value = '';
-            selectedRating = 0;
-            updateStars();
         }
     </script>
 
